@@ -3,7 +3,7 @@
 import pandas as pd
 import requests
 
-subjacente = 'BOVA11'   # não vem do Yfinance! esqueça o ".SA" ao final do ticker!
+subjacente = 'PETR4'   # não vem do Yfinance! esqueça o ".SA" ao final do ticker!
 
 # Um vencimento
 vencimento = '2024-01-19'      # YYYY-MM-DD
@@ -35,7 +35,7 @@ symbol = 'NVDA'
 # Crie o objeto
 stock = yf.Ticker(symbol)
 
-# Colete dados das opções
+# Colete dados das opções - datas de vencimento
 options = stock.options
 
 # E, finalmente, a option chain
@@ -51,4 +51,3 @@ for option_symbol in options:
     put_options = option_chain.puts
     print(f"Put Options para {option_symbol}:")
     print(put_options)
-
