@@ -1,8 +1,10 @@
 # Precificando um Straddle - Derivativos em Py #03
 
+import numpy as np
+from scipy.stats import norm
 import matplotlib.pyplot as plt
 
-# Função para calcular o payoff do Straddle
+# Função para calcular o payoff do straddle
 def straddle_payoff(stock_price, strike_price, call_price, put_price):
     call_payoff = max(stock_price - strike_price, 0) - call_price
     put_payoff = max(strike_price - stock_price, 0) - put_price
@@ -14,7 +16,7 @@ call_price = 1.47
 put_price = 1.09
 
 # Cálculo do payoff do straddle para um intervalo dos preços do ativo subjacente
-stock_prices = range(int(0.5 * strike_price), int(1.5 * strike_price), 0.1)
+stock_prices = np.arange(int(0.5 * strike_price), int(1.5 * strike_price), 0.1)
 payoffs = [straddle_payoff(price, strike_price, call_price, put_price) for price in stock_prices]
 
 # Plot do payoff do straddle
@@ -25,21 +27,8 @@ plt.ylabel('Payoff')
 plt.grid(True)
 plt.show()
 
-# Stradle - Gregas
-##################
-
-import numpy as np
-from scipy.stats import norm
-
-# Modelo de precificação de Black-Scholes-Merton
-def black_scholes(S, K, T, r, sigma, option_type):
-    d1 = (np.log(S / K) + (r + 0.5 * sigma ** 2) * T) / (sigma * np.sqrt(T))
-    d2 = d1 - sigma * np.sqrt(T)
-    
-    if option_type == 'call':
-        return S * norm.cdf(d1) - K * np.exp(-r * T) * norm.cdf(d2)
-    elif option_type == 'put':
-        return K * np.exp(-r * T) * norm.cdf(-d2) - S * norm.cdf(-d1)
+# Straddle - Gregas
+###################
 
 # Funções para cálculo das gregas - delta, gamma, vega, theta
 def delta(S, K, T, r, sigma, option_type):
@@ -89,10 +78,10 @@ straddle_vega = call_vega + put_vega
 straddle_theta = call_theta + put_theta
 
 # Critério de conveniência da operação baseada em valores das gregas do straddle
-convenient_delta = abs(straddle_delta) >= 0.5  # Exemplo. Ajustar de acordo com análise individual
-convenient_gamma = abs(straddle_gamma) >= 0.1  # Exemplo. Ajustar de acordo com análise individual
-convenient_vega = abs(straddle_vega) >= 0.01   # Exemplo. Ajustar de acordo com análise individual
-convenient_theta = abs(straddle_theta) >= 0.05 # Exemplo. Ajustar de acordo com análise individual
+convenient_delta = abs(straddle_delta) >= 0.1  # Exemplo. Ajustar de acordo com análise individual
+convenient_gamma = abs(straddle_gamma) >= 0.3  # Exemplo. Ajustar de acordo com análise individual
+convenient_vega = abs(straddle_vega) >= 0.10   # Exemplo. Ajustar de acordo com análise individual
+convenient_theta = abs(straddle_theta) >= -35  # Exemplo. Ajustar de acordo com análise individual
 
 # Checagem da conveniência do straddle
 if convenient_delta and convenient_gamma and convenient_vega and convenient_theta:
