@@ -11,9 +11,9 @@ def straddle_payoff(stock_price, strike_price, call_price, put_price):
     return call_payoff + put_payoff
 
 # K e preços das calls e puts
-strike_price = 74.32
-call_price = 1.47
-put_price = 1.09
+strike_price = 73.32
+call_price = 1.24
+put_price = 1.15
 
 # Cálculo do payoff do straddle para um intervalo dos preços do ativo subjacente
 stock_prices = np.arange(int(0.5 * strike_price), int(1.5 * strike_price), 0.1)
@@ -55,9 +55,9 @@ def theta(S, K, T, r, sigma, option_type):
         return -(S * norm.pdf(d1) * sigma) / (2 * np.sqrt(T)) + r * K * np.exp(-r * T) * norm.cdf(-d2)
 
 # Parâmetros
-S = 74.27           # Preço atual do ativo subjacente
+S = 73.33           # Preço atual do ativo subjacente
 K = strike_price    # Preço de exercício
-T = 8/252           # Vencimento em anos
+T = 7/252           # Vencimento em anos
 r = 0.116571        # Taxa de juros livre de risco
 sigma = 0.21        # Volatilidade
 
