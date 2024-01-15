@@ -4,7 +4,7 @@ import math
 
 def black_scholes_call_put(S, K, T, r, sigma, option_type):
     '''
-    Para calcular o preço de uma call o put (europeias) usando o modelo de Black-Scholes-Merton
+    Para calcular o preço de uma call ou put (europeias) usando o modelo de Black-Scholes-Merton
         
     parâmetro S: preço spot do ativo subjacente
     parâmetro K: preço de exercício da opção
