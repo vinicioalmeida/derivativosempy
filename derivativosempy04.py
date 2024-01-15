@@ -3,7 +3,7 @@
 import numpy as np
 
 # Função para cálculo do preço da opção via árvore binomial
-def binomial_tree_option_pricing(S, K, T, r, sigma, n):
+def binomial_tree_option_pricing(S, K, T, r, sigma, n, option_type='call'):
     dt = T / n
     u = np.exp(sigma * np.sqrt(dt))
     d = 1 / u
@@ -14,7 +14,10 @@ def binomial_tree_option_pricing(S, K, T, r, sigma, n):
 
     # Cálculo do valor da opção nos nós de vencimento
     for j in range(n + 1):
-        option_values[n, j] = max(0, S * (u**j) * (d**(n - j)) - K)
+        if option_type == 'call':
+            option_values[n, j] = max(0, S * (u**j) * (d**(n - j)) - K)
+        elif option_type == 'put':
+            option_values[n, j] = max(0, K - S * (u**j) * (d**(n - j)))
 
     # Cálculo dos preços retrocedendo na árvore
     for i in range(n - 1, -1, -1):
@@ -27,19 +30,23 @@ def binomial_tree_option_pricing(S, K, T, r, sigma, n):
     return option_price
 
 # Parâmetros
-S0 = 20      # Preço spot inicial da ação
-K = 21       # Preço de exercício
-T = 0.25     # Vencimento em anos
-r = 0.12     # Taxa de juros livre de risco (anual)
-sigma = 0.2  # Volatilidade anual
+S0 = 38.17      # Preço spot inicial da ação
+K = 40.01       # Preço de exercício
+T = 22/252      # Vencimento em anos
+r = 0.115685    # Taxa de juros livre de risco (anual)
+sigma = 0.25    # Volatilidade anual
 
 # Número de passos
 n = int(2)
 
-# Cálculo do preço da opção
-option_price = binomial_tree_option_pricing(S0, K, T, r, sigma, n)
+# Cálculo do preço da opção de compra (call)
+call_price = binomial_tree_option_pricing(S0, K, T, r, sigma, n, option_type='call')
 
-print(f"O preço da opção com {n} passos é: {option_price:.2f}")
+# Cálculo do preço da opção de venda (put)
+put_price = binomial_tree_option_pricing(S0, K, T, r, sigma, n, option_type='put')
+
+print(f"O preço da opção de compra (call) com {n} passos é: {call_price:.2f}")
+print(f"O preço da opção de venda (put) com {n} passos é: {put_price:.2f}")
 
 
 # Black-Scholes-Merton - Derivativos em Py #02
@@ -63,11 +70,11 @@ def norm_cdf(x):
     return (1.0 + math.erf(x / math.sqrt(2.0))) / 2.0
 
 # Um exemplo
-S = 37.24
-K = 35.52  
-T = 0.05158730158
-r = 0.116571 
-sigma = 0.26 
+S = 38.17
+K = 40.01  
+T = 22/252
+r = 0.115685 
+sigma = 0.25 
 
 precoCall = black_scholes_call_put(S, K, T, r, sigma, 'call')
 precoPut = black_scholes_call_put(S, K, T, r, sigma, 'put')
