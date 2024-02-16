@@ -34,7 +34,7 @@ import requests
 subjacente = 'PETR4'   # não vem do Yfinance! esqueça o ".SA" ao final do ticker!
 
 # Um vencimento
-vencimento = '2024-01-19'      # YYYY-MM-DD
+vencimento = '2024-03-15'      # YYYY-MM-DD
 def optionchaindate(subjacente, vencimento):
     url = f'https://opcoes.net.br/listaopcoes/completa?idAcao={subjacente}&listarVencimentos=false&cotacoes=true&vencimentos={vencimento}'
     r = requests.get(url).json()
