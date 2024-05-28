@@ -30,10 +30,10 @@ def binomial_tree_option_pricing(S, K, T, r, sigma, n, option_type='call'):
     return option_price
 
 # Parâmetros
-S = 38.17      # Preço spot inicial da ação
-K = 40.01       # Preço de exercício
-T = 22/252      # Vencimento em anos
-r = 0.115685    # Taxa de juros livre de risco (anual)
+S = 37.50       # Preço spot inicial da ação
+K = 37.20       # Preço de exercício
+T = 17/252      # Vencimento em anos
+r = 0.101627    # Taxa de juros livre de risco (anual)
 sigma = 0.25    # Volatilidade anual
 
 # Número de passos
